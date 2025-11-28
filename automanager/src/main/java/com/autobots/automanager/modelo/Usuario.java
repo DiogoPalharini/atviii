@@ -17,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
-import com.autobots.automanager.entitades.Credencial;
 import com.autobots.automanager.entitades.Documento;
 import com.autobots.automanager.entitades.Email;
 import com.autobots.automanager.entitades.Endereco;
@@ -64,8 +63,9 @@ public class Usuario {
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Email> emails = new HashSet<>();
 	
-	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Credencial> credenciais = new HashSet<>();
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "credencial_id")
+	private Credencial credencial;
 	
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	private Set<Mercadoria> mercadorias = new HashSet<>();
