@@ -21,11 +21,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.autobots.automanager.assembler.UsuarioAssembler;
 import com.autobots.automanager.assembler.VeiculoAssembler;
+import com.autobots.automanager.assembler.VendaAssembler;
 import com.autobots.automanager.modelo.Usuario;
 import com.autobots.automanager.modelo.UsuarioDTO;
 import com.autobots.automanager.modelo.Veiculo;
+import com.autobots.automanager.modelo.Venda;
 import com.autobots.automanager.servico.UsuarioServico;
 import com.autobots.automanager.servico.VeiculoServico;
+import com.autobots.automanager.servico.VendaServico;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -42,6 +45,12 @@ public class UsuarioControle {
 	
 	@Autowired
 	private VeiculoAssembler veiculoAssembler;
+	
+	@Autowired
+	private VendaServico vendaServico;
+	
+	@Autowired
+	private VendaAssembler vendaAssembler;
 
 	@GetMapping
 	public ResponseEntity<CollectionModel<EntityModel<Usuario>>> listar() {
@@ -113,6 +122,16 @@ public class UsuarioControle {
 		}
 		List<Veiculo> veiculos = veiculoServico.listarPorUsuario(usuarioId);
 		CollectionModel<EntityModel<Veiculo>> collectionModel = veiculoAssembler.toCollectionModel(veiculos);
+		return ResponseEntity.ok(collectionModel);
+	}
+	
+	@GetMapping("/{id}/vendas")
+	public ResponseEntity<CollectionModel<EntityModel<Venda>>> listarVendasPorUsuario(@PathVariable Long id) {
+		if (!servico.existe(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		List<Venda> vendas = vendaServico.listarPorCliente(id);
+		CollectionModel<EntityModel<Venda>> collectionModel = vendaAssembler.toCollectionModel(vendas);
 		return ResponseEntity.ok(collectionModel);
 	}
 }

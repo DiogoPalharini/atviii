@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.autobots.automanager.assembler.VeiculoAssembler;
+import com.autobots.automanager.assembler.VendaAssembler;
 import com.autobots.automanager.modelo.Veiculo;
 import com.autobots.automanager.modelo.VeiculoDTO;
+import com.autobots.automanager.modelo.Venda;
 import com.autobots.automanager.servico.VeiculoServico;
+import com.autobots.automanager.servico.VendaServico;
 
 @RestController
 @RequestMapping("/veiculos")
@@ -33,6 +36,12 @@ public class VeiculoControle {
 
 	@Autowired
 	private VeiculoAssembler assembler;
+	
+	@Autowired
+	private VendaServico vendaServico;
+	
+	@Autowired
+	private VendaAssembler vendaAssembler;
 
 	@GetMapping
 	public ResponseEntity<CollectionModel<EntityModel<Veiculo>>> listar() {
@@ -97,6 +106,16 @@ public class VeiculoControle {
 		}
 		servico.excluir(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/{id}/vendas")
+	public ResponseEntity<CollectionModel<EntityModel<Venda>>> listarVendasPorVeiculo(@PathVariable Long id) {
+		if (!servico.existe(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		List<Venda> vendas = vendaServico.listarPorVeiculo(id);
+		CollectionModel<EntityModel<Venda>> collectionModel = vendaAssembler.toCollectionModel(vendas);
+		return ResponseEntity.ok(collectionModel);
 	}
 }
 
