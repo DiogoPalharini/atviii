@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.autobots.automanager.assembler.UsuarioAssembler;
+import com.autobots.automanager.assembler.VeiculoAssembler;
 import com.autobots.automanager.modelo.Usuario;
 import com.autobots.automanager.modelo.UsuarioDTO;
+import com.autobots.automanager.modelo.Veiculo;
 import com.autobots.automanager.servico.UsuarioServico;
+import com.autobots.automanager.servico.VeiculoServico;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -33,6 +36,12 @@ public class UsuarioControle {
 
 	@Autowired
 	private UsuarioAssembler assembler;
+	
+	@Autowired
+	private VeiculoServico veiculoServico;
+	
+	@Autowired
+	private VeiculoAssembler veiculoAssembler;
 
 	@GetMapping
 	public ResponseEntity<CollectionModel<EntityModel<Usuario>>> listar() {
@@ -95,6 +104,16 @@ public class UsuarioControle {
 		}
 		servico.excluir(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/{usuarioId}/veiculos")
+	public ResponseEntity<CollectionModel<EntityModel<Veiculo>>> listarVeiculosPorUsuario(@PathVariable Long usuarioId) {
+		if (!servico.existe(usuarioId)) {
+			return ResponseEntity.notFound().build();
+		}
+		List<Veiculo> veiculos = veiculoServico.listarPorUsuario(usuarioId);
+		CollectionModel<EntityModel<Veiculo>> collectionModel = veiculoAssembler.toCollectionModel(veiculos);
+		return ResponseEntity.ok(collectionModel);
 	}
 }
 
