@@ -38,19 +38,42 @@ public class VendaServico {
 	private ServicoRepositorio servicoRepositorio;
 
 	public List<Venda> listar() {
-		return repositorio.findAll();
+		List<Venda> vendas = repositorio.findAll();
+		// Forçar carregamento das coleções LAZY para evitar LazyInitializationException
+		vendas.forEach(v -> {
+			v.getItensMercadoria().size();
+			v.getItensServico().size();
+		});
+		return vendas;
 	}
 	
 	public List<Venda> listarPorCliente(Long clienteId) {
-		return repositorio.findByClienteId(clienteId);
+		List<Venda> vendas = repositorio.findByClienteId(clienteId);
+		vendas.forEach(v -> {
+			v.getItensMercadoria().size();
+			v.getItensServico().size();
+		});
+		return vendas;
 	}
 	
 	public List<Venda> listarPorVeiculo(Long veiculoId) {
-		return repositorio.findByVeiculoId(veiculoId);
+		List<Venda> vendas = repositorio.findByVeiculoId(veiculoId);
+		vendas.forEach(v -> {
+			v.getItensMercadoria().size();
+			v.getItensServico().size();
+		});
+		return vendas;
 	}
 
 	public Optional<Venda> buscarPorId(Long id) {
-		return repositorio.findById(id);
+		Optional<Venda> vendaOpt = repositorio.findById(id);
+		if (vendaOpt.isPresent()) {
+			Venda venda = vendaOpt.get();
+			// Forçar carregamento das coleções LAZY
+			venda.getItensMercadoria().size();
+			venda.getItensServico().size();
+		}
+		return vendaOpt;
 	}
 
 	public Venda salvar(Venda venda) {

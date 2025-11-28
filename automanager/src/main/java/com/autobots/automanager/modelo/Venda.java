@@ -43,10 +43,10 @@ public class Venda {
 	@JoinColumn(name = "veiculo_id")
 	private Veiculo veiculo;
 	
-	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<ItemMercadoria> itensMercadoria = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<ItemServico> itensServico = new ArrayList<>();
 	
 	@Column(nullable = false)
