@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.autobots.automanager.assembler.EmpresaAssembler;
+import com.autobots.automanager.assembler.UsuarioAssembler;
 import com.autobots.automanager.modelo.Empresa;
+import com.autobots.automanager.modelo.Usuario;
 import com.autobots.automanager.servico.EmpresaServico;
+import com.autobots.automanager.servico.UsuarioServico;
 
 @RestController
 @RequestMapping("/empresas")
@@ -32,6 +35,12 @@ public class EmpresaControle {
 
 	@Autowired
 	private EmpresaAssembler assembler;
+	
+	@Autowired
+	private UsuarioServico usuarioServico;
+	
+	@Autowired
+	private UsuarioAssembler usuarioAssembler;
 
 	@GetMapping
 	public ResponseEntity<CollectionModel<EntityModel<Empresa>>> listar() {
@@ -73,5 +82,15 @@ public class EmpresaControle {
 		}
 		servico.excluir(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/{empresaId}/usuarios")
+	public ResponseEntity<CollectionModel<EntityModel<Usuario>>> listarUsuariosPorEmpresa(@PathVariable Long empresaId) {
+		if (!servico.existe(empresaId)) {
+			return ResponseEntity.notFound().build();
+		}
+		List<Usuario> usuarios = usuarioServico.listarPorEmpresa(empresaId);
+		CollectionModel<EntityModel<Usuario>> collectionModel = usuarioAssembler.toCollectionModel(usuarios);
+		return ResponseEntity.ok(collectionModel);
 	}
 }
