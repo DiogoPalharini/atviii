@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
 @Data
-@Entity
+@Entity(name = "ServicoEntidade")
 public class Servico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

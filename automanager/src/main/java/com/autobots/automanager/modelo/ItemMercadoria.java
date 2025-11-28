@@ -14,7 +14,7 @@ import javax.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name = "ItemMercadoriaModelo")
 public class ItemMercadoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

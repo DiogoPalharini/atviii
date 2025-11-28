@@ -22,7 +22,7 @@ import com.autobots.automanager.entitades.Telefone;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name = "EmpresaModelo")
 public class Empresa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

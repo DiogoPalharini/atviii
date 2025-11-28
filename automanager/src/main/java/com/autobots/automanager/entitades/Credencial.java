@@ -13,7 +13,7 @@ import javax.persistence.InheritanceType;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name = "CredencialEntidade")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Credencial {
 	@Id()

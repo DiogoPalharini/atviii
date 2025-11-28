@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(exclude = { "cliente", "veiculo", "itensMercadoria", "itensServico" })
-@Entity
+@Entity(name = "VendaModelo")
 public class Venda {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
