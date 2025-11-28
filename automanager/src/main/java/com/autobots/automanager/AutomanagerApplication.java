@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.autobots.automanager.modelo")
+@EntityScan(basePackages = {"com.autobots.automanager.modelo", "com.autobots.automanager.entitades"})
 @EnableJpaRepositories(basePackages = "com.autobots.automanager.repositorio")
 public class AutomanagerApplication {
 

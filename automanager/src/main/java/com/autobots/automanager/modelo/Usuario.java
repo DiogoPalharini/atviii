@@ -20,10 +20,7 @@ import javax.validation.constraints.NotBlank;
 import com.autobots.automanager.entitades.Documento;
 import com.autobots.automanager.entitades.Email;
 import com.autobots.automanager.entitades.Endereco;
-import com.autobots.automanager.entitades.Mercadoria;
 import com.autobots.automanager.entitades.Telefone;
-import com.autobots.automanager.entitades.Veiculo;
-import com.autobots.automanager.entitades.Venda;
 import com.autobots.automanager.enumeracoes.PerfilUsuario;
 
 import lombok.Data;
@@ -67,13 +64,5 @@ public class Usuario {
 	@JoinColumn(name = "credencial_id")
 	private Credencial credencial;
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
-	private Set<Mercadoria> mercadorias = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<Venda> vendas = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<Veiculo> veiculos = new HashSet<>();
 }
 

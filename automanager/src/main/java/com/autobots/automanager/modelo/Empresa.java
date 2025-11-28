@@ -17,11 +17,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.autobots.automanager.entitades.Endereco;
-import com.autobots.automanager.entitades.Mercadoria;
-import com.autobots.automanager.entitades.Servico;
 import com.autobots.automanager.entitades.Telefone;
-import com.autobots.automanager.entitades.Usuario;
-import com.autobots.automanager.entitades.Venda;
 
 import lombok.Data;
 
@@ -52,16 +48,5 @@ public class Empresa {
 	@Column(nullable = false)
 	private Date cadastro;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Usuario> usuarios = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Mercadoria> mercadorias = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Servico> servicos = new HashSet<>();
-	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Venda> vendas = new HashSet<>();
 }
 

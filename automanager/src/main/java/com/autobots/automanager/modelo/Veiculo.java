@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.autobots.automanager.entitades.Venda;
 import com.autobots.automanager.enumeracoes.TipoVeiculo;
 
 import lombok.Data;
@@ -46,7 +45,5 @@ public class Veiculo {
 	@JoinColumn(name = "usuario_id")
 	private Usuario proprietario;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
-	private Set<Venda> vendas = new HashSet<>();
 }
 
