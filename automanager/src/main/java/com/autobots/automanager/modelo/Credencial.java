@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name = "CredencialModelo")
 public class Credencial {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
